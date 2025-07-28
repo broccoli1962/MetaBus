@@ -69,6 +69,14 @@ public class PlayerController : BaseController
         isRide = false;
     }
 
+    public void SelectSkin(RuntimeAnimatorController skin)
+    {
+        if (playerAnim != null) {
+            playerAnim.runtimeAnimatorController = skin;
+            originAnim = skin;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("TriggerObject"))
