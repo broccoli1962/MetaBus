@@ -7,7 +7,24 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : BaseController
 {
+    private Animator playerAnim;
+
     private BaseTrigger trigger;
+    private RuntimeAnimatorController originAnim;
+    private float originSpeed;
+    
+    public bool isRide {  get; set; } = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        playerAnim = GetComponentInChildren<Animator>();
+
+        if (playerAnim != null) {
+            originAnim = playerAnim.runtimeAnimatorController;
+        }
+        originSpeed = Speed;
+    }
 
     void Start()
     {
@@ -29,6 +46,27 @@ public class PlayerController : BaseController
         {
             trigger.Interact(this);
         }
+        else if (isRide && inputValue.isPressed) {
+            StopRide();
+        }
+    }
+
+    public void StartRide(RuntimeAnimatorController rideAnim, float rideSpeed)
+    {
+        if (playerAnim != null)
+        {
+            playerAnim.runtimeAnimatorController = rideAnim;
+        }
+        Speed = rideSpeed;
+        isRide = true;
+    }
+    public void StopRide()
+    {
+        if (playerAnim != null) {
+            playerAnim.runtimeAnimatorController = originAnim;
+        }
+        Speed = originSpeed;
+        isRide = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RidingTrigger : BaseTrigger
 {
     [SerializeField] private GameObject ridingUI;
+    [SerializeField] private float rideSpeed = 5f;
     private Animator ridingAnim;
 
     private void Awake()
@@ -25,10 +26,8 @@ public class RidingTrigger : BaseTrigger
 
     public override void Interact(PlayerController player)
     {
-        Animator playerAnim = player.GetComponentInChildren<Animator>();
-        if (playerAnim != null) {
-            playerAnim.runtimeAnimatorController = ridingAnim.runtimeAnimatorController;
-            player.Speed = 5;
+        if (!player.isRide && ridingAnim != null) {
+            player.StartRide(ridingAnim.runtimeAnimatorController, rideSpeed);
         }
     }
 }
