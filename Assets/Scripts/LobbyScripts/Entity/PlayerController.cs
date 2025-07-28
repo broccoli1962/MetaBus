@@ -8,9 +8,13 @@ using UnityEngine.SceneManagement;
 public class PlayerController : BaseController
 {
     private BaseTrigger trigger;
+
     void Start()
     {
-        transform.position = GameManager.Instance.playerLocation;
+        if(GameManager.Instance.playerLocation != null)
+        {
+            transform.position = GameManager.Instance.playerLocation;
+        }
     }
 
     void OnMove(InputValue inputValue)

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
     public static GameManager Instance {  get { return instance; } }
     public Vector2 playerLocation;
+    public Animator originAnimator;
 
     private void Awake()
     {
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        originAnimator = GetComponent<Animator>();
     }
 
     public void SavePlayerPosition(Vector2 position)
